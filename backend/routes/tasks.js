@@ -2,10 +2,11 @@ const express = require('express');
 const Task = require('../models/Task');
 const auth = require('../middleware/authMiddleware');
 const router = express.Router();
-const { protect } = require('../middleware/auth');
+const { protect } = require('../middleware/authMiddleware');
 
 
-router.use(auth);
+
+// router.use(auth);
 
 // router.get('/', async (req, res) => {
 //   const tasks = await Task.find({ userId: req.user.id });

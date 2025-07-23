@@ -8,6 +8,7 @@ const initialState = {
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (_, { getState }) => {
   const token = getState().auth.token;
+    console.log('FETCH TOKEN:', token); // ✅ debug it
   const res = await axios.get('http://localhost:5000/api/tasks', {
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -15,10 +16,17 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (_, { getSt
 });
 
 export const addTask = createAsyncThunk('tasks/addTask', async (task, { getState }) => {
-  const token = getState().auth.token;
+  // const token = getState().auth.token;
+  //   console.log('TOKEN:', token); // ✅ DEBUG THIS
+  //     console.log('Task sent to backend:', task); // ✅ DEBUG: Check task payload
+  const state = getState();
+  console.log('auth slice:', state.auth); // ✅ Check token in state
+  const token = state.auth.token;
+  console.log('TOKEN:', token); // ✅ Debug token
   const res = await axios.post('http://localhost:5000/api/tasks', task, {
     headers: { Authorization: `Bearer ${token}` },
   });
+     console.log('Response from backend:', res.data); // ✅ DEBUG: Check response
   return res.data;
 });
 
