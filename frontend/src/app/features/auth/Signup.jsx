@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { register } from './authSlice';
-import { useNavigate } from 'react-router-dom'; // If using React Router
+//import { useNavigate } from 'react-router-dom'; // If using React Router
+import { useNavigate, Link } from 'react-router-dom';
 
 const Signup = () => {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -14,7 +15,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       await dispatch(register(form)).unwrap(); // wait for response
-      // navigate('/tasks'); // or wherever you want to go
+      // navigate('/tasks');
       navigate('/login');
     } catch (error) {
       console.error('Registration failed:', error);
@@ -42,6 +43,9 @@ const Signup = () => {
       <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded">
         Register
       </button>
+       <p className="mt-2 text-sm">
+        Already have an account? <Link to="/login" className="text-blue-600 underline">Login</Link>
+      </p>
     </form>
   );
 };

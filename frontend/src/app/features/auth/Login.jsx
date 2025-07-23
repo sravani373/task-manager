@@ -1,26 +1,15 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { login } from './authSlice';
+import { login, setToken } from './authSlice';
+import { useNavigate, Link } from 'react-router-dom';
+//import { setToken } from './authSlice'; // ✅ adjust path if needed
+
 
 const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     // dispatch(login(form));
-//     const handleSubmit = async (e) => {
-//   e.preventDefault();
-//   try {
-//     const result = await dispatch(login(form)).unwrap();
-//     dispatch(setToken(result.token)); // optional
-//     localStorage.setItem('token', result.token); // optional
-//   } catch (err) {
-//     console.error('Login failed:', err);
-//   }
-// };
-
-//   };
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -28,6 +17,8 @@ const handleSubmit = async (e) => {
     const result = await dispatch(login(form)).unwrap(); // result is token string
     dispatch(setToken(result)); // store in Redux
     localStorage.setItem('token', result); // store in localStorage
+          navigate('/tasks');
+
   } catch (err) {
     console.error('Login failed:', err);
   }
@@ -54,6 +45,9 @@ const handleSubmit = async (e) => {
       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
         Login
       </button>
+      <p className="mt-2 text-sm">
+        Don't have an account? <Link to="/signup" className="text-green-600 underline">Register</Link>
+      </p>
     </form>
   );
 };
